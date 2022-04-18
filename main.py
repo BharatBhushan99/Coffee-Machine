@@ -66,6 +66,12 @@ def check_transaction(coffee_type, coins_inserted):
 	profit += MENU[coffee_type]["cost"]
 	return True
 
+def deduct_ingredients(coffee_type):
+	items = ["water", "milk", "coffee"]
+
+	for item in items:
+		resources[item] -= MENU[coffee_type]["ingredients"][item]
+
 turn_off = False
 
 
@@ -83,19 +89,22 @@ while not turn_off:
 		if check_resources("espresso"):
 			coins_inserted = processs_coins()
 			if check_transaction("espresso", coins_inserted):
-				print("Making espresso")
+				deduct_ingredients("espresso")
+				print(f"Here is your {user_input} ☕. Enjoy!")
 
 	elif user_input == "latte":
 		if check_resources("latte"):
 			coins_inserted = processs_coins()
 			if check_transaction("latte", coins_inserted):
-				print("Making latte")
+				deduct_ingredients("latte")
+				print(f"Here is your {user_input} ☕. Enjoy!")
 
 	elif user_input == "cappuccino":
 		if check_resources("cappuccino"):
 			coins_inserted = processs_coins()
-			if check_transaction("latte", coins_inserted):
-				print("Making cappuccino")
+			if check_transaction("cappuccino", coins_inserted):
+				deduct_ingredients("cappuccino")
+				print(f"Here is your {user_input} ☕. Enjoy!")
 	else:
 		print("Incorrect input.")
 
