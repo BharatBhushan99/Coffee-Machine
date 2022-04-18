@@ -2,7 +2,9 @@ MENU = {
     "espresso": {
         "ingredients": {
             "water": 50,
+            "milk": 0,
             "coffee": 18,
+
         },
         "cost": 1.5,
     },
@@ -34,6 +36,14 @@ resources = {
 def print_report():
 	print(f"Water: {resources['water']}ml\nMilk:  {resources['milk']}ml\nCoffee: {resources['coffee']}g\nMoney: ${profit:.2f}")
 	     
+def check_resources(coffee_type):
+	items = ["water", "milk", "coffee"]
+
+	for item in items:
+		if resources[item] < MENU[coffee_type]["ingredients"][item]:
+			print(f"Sorry there is not enough {item}.")
+			return False
+	return True
 
 turn_off = False
 
@@ -43,7 +53,24 @@ while not turn_off:
 
 	if user_input == "off":
 		turn_off = True
+
 	elif user_input == "report":
 		print_report()
+		
+	elif user_input == "espresso":
+
+		if check_resources("espresso"):
+			print("Making espresso")
+
+	elif user_input == "latte":
+		if check_resources("latte"):
+			print("Making latte")
+
+	elif user_input == "cappuccino":
+		if check_resources("cappuccino"):
+			print("Making cappuccino")
+	else:
+		print("Incorrect input.")
+
 
 
