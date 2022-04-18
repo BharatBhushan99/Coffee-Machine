@@ -45,6 +45,27 @@ def check_resources(coffee_type):
 			return False
 	return True
 
+def processs_coins():
+	print("Please insert coins.")
+	quaters = int(input("how many quarters?: "))
+	dimes = int(input("how many dimes?: "))
+	nickels = int(input("how many nickels?: ")) 
+	pennies = int(input("how many pennies?: ")) 
+	total = quaters * 0.25 + dimes * 0.10 + nickels * 0.05 + pennies * 0.01
+	return total
+
+def check_transaction(coffee_type, coins_inserted):
+
+	global profit
+
+	if coins_inserted < MENU[coffee_type]["cost"]:
+		print("Sorry that's not enough money. Money refunded.")
+		return False
+	elif coins_inserted > MENU[coffee_type]["cost"]:
+		print(f"Here is ${round(coins_inserted - MENU[coffee_type]['cost'], 2)} in change.")
+	profit += MENU[coffee_type]["cost"]
+	return True
+
 turn_off = False
 
 
@@ -56,19 +77,25 @@ while not turn_off:
 
 	elif user_input == "report":
 		print_report()
-		
+
 	elif user_input == "espresso":
 
 		if check_resources("espresso"):
-			print("Making espresso")
+			coins_inserted = processs_coins()
+			if check_transaction("espresso", coins_inserted):
+				print("Making espresso")
 
 	elif user_input == "latte":
 		if check_resources("latte"):
-			print("Making latte")
+			coins_inserted = processs_coins()
+			if check_transaction("latte", coins_inserted):
+				print("Making latte")
 
 	elif user_input == "cappuccino":
 		if check_resources("cappuccino"):
-			print("Making cappuccino")
+			coins_inserted = processs_coins()
+			if check_transaction("latte", coins_inserted):
+				print("Making cappuccino")
 	else:
 		print("Incorrect input.")
 
